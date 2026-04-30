@@ -113,3 +113,7 @@ html.lenis body {
   50%      { opacity: 1;   transform: scale(1.25); }
 }
 .animate-pulse-dot { animation: pulse-dot 2.4s ease-in-out infinite; }
+
+@keyframes drawCurve {
+  to { stroke-dashoffset: 0; }
+}

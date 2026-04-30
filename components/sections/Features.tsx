@@ -41,10 +41,10 @@ export function Features() {
           </RevealItem>
         </Reveal>
 
-        <Reveal className="mt-16 grid gap-6 md:grid-cols-3">
+        <Reveal className="mt-16 grid items-stretch gap-6 md:grid-cols-3">
           {features.cards.map((c, i) => (
-            <RevealItem key={c.title}>
-              <Card>
+            <RevealItem key={c.title} className="h-full">
+              <Card className="flex h-full flex-col">
                 <div
                   className="mb-5 flex h-[42px] w-[42px] items-center justify-center rounded-[11px] bg-surface2 text-forest"
                   style={{
