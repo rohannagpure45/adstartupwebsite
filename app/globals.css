@@ -11,8 +11,13 @@
   --color-burnt: #de6854; /* Burnt Peach — tertiary accent, charts, illustrations */
   --color-warm-white: #fffbf5; /* Warm White — light mode page background */
   --color-surface: #f0ede6; /* Surface — light mode card backgrounds */
+  --color-surface2: #e5ddd0; /* Surface 2 — depressed inset surfaces */
   --color-text-dark: #1c3829; /* Body text on light backgrounds */
   --color-text-mid: #2e5e45; /* Secondary text on light backgrounds */
+  --color-text-light: #6b8a7a; /* Muted text */
+  --color-sienna: #7b3420; /* Sienna — primary CTA on cream theme */
+  --color-sienna-deep: #5c2616;
+  --color-sienna-soft: #a44e2a;
 
   /* Legacy aliases (kept for components still referencing var() names) */
   --orange: var(--color-accent);
@@ -40,12 +45,12 @@ html {
 }
 
 body {
-  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  font-family: var(--font-dm-sans), var(--font-inter), system-ui, -apple-system, sans-serif;
   font-feature-settings: "ss01", "cv11";
 }
 
 .font-display {
-  font-family: var(--font-radley), Georgia, serif;
+  font-family: var(--font-playfair), var(--font-radley), Georgia, serif;
   letter-spacing: -0.01em;
 }
 
@@ -88,3 +93,23 @@ html.lenis body {
   background: var(--color-accent);
   color: var(--color-anchor);
 }
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-surface); }
+::-webkit-scrollbar-thumb { background: #c4b08a; border-radius: 3px; }
+
+/* Streaming + reveal keyframes */
+@keyframes streamWord {
+  0%   { opacity: 0; transform: translateY(12px); filter: blur(6px); }
+  100% { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+@keyframes fadeUpIn {
+  0%   { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: .55; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.25); }
+}
+.animate-pulse-dot { animation: pulse-dot 2.4s ease-in-out infinite; }

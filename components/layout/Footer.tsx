@@ -32,11 +32,13 @@ export function Footer() {
     <footer className="border-t border-forest/20 bg-warm-white">
       <div className="mx-auto grid max-w-container gap-12 px-6 py-20 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
-          <Link href="/" className="flex items-center gap-2">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-navy">
-              <span className="h-3 w-3 rounded-full bg-orange" />
-            </span>
-            <span className="font-display text-2xl">{brand.name}</span>
+          <Link href="/" className="flex items-center gap-2.5">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden>
+              <circle cx="14" cy="14" r="13" fill="#1C3829" />
+              <circle cx="14" cy="14" r="5.5" fill="#B0FE76" />
+              <circle cx="14" cy="14" r="2.5" fill="#1C3829" />
+            </svg>
+            <span className="font-display text-2xl text-anchor">{brand.name}</span>
           </Link>
           <p className="mt-4 max-w-xs text-sm text-navy/60">{brand.tagline}</p>
         </div>

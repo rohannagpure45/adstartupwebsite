@@ -13,6 +13,8 @@ const config: Config = {
         burnt: "#DE6854",
         "warm-white": "#FFFBF5",
         surface: "#F0EDE6",
+        surface2: "#E5DDD0",
+        sienna: { DEFAULT: "#7B3420", deep: "#5C2616", soft: "#A44E2A" },
 
         // Legacy aliases mapped to new palette so existing class usage keeps working.
         // navy → anchor (primary dark/text), navy.caption → forest (secondary text)
@@ -27,8 +29,9 @@ const config: Config = {
         grey: "#E5E5E5",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        serif: ["var(--font-radley)", "Georgia", "serif"],
+        sans: ["var(--font-dm-sans)", "var(--font-inter)", "system-ui", "sans-serif"],
+        serif: ["var(--font-playfair)", "var(--font-radley)", "Georgia", "serif"],
+        display: ["var(--font-playfair)", "var(--font-radley)", "Georgia", "serif"],
       },
       maxWidth: {
         container: "1240px",

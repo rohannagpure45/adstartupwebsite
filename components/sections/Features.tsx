@@ -45,11 +45,19 @@ export function Features() {
           {features.cards.map((c, i) => (
             <RevealItem key={c.title}>
               <Card>
-                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-orange/10 text-orange-deep">
-                  <div className="h-6 w-6">{icons[i]}</div>
+                <div
+                  className="mb-5 flex h-[42px] w-[42px] items-center justify-center rounded-[11px] bg-surface2 text-forest"
+                  style={{
+                    boxShadow:
+                      "inset 0 2px 4px rgba(0,0,0,0.08), inset 0 -1px 0 rgba(255,255,255,0.5)",
+                  }}
+                >
+                  <div className="h-5 w-5">{icons[i]}</div>
                 </div>
-                <h3 className="font-display text-2xl text-navy">{c.title}</h3>
-                <p className="mt-3 text-base leading-relaxed text-navy/65">{c.body}</p>
+                <h3 className="font-display text-[20px] font-semibold tracking-[-0.01em] text-anchor">
+                  {c.title}
+                </h3>
+                <p className="mt-2.5 text-[14.5px] leading-[1.6] text-forest">{c.body}</p>
               </Card>
             </RevealItem>
           ))}

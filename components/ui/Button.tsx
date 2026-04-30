@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 type Props = {
   href: string;
   children: ReactNode;
-  variant?: "primary" | "secondary" | "ghost";
+  variant?: "primary" | "secondary" | "glass" | "ghost";
   className?: string;
 };
 
@@ -14,9 +14,11 @@ export function Button({ href, children, variant = "primary", className }: Props
     "inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-300 will-change-transform";
   const styles = {
     primary:
-      "bg-accent text-anchor hover:bg-coral hover:text-warm-white hover:-translate-y-0.5 hover:shadow-[0_12px_32px_-12px_rgba(176,254,118,0.55)]",
+      "bg-sienna text-warm-white shadow-[0_4px_14px_rgba(123,52,32,0.25)] hover:bg-sienna-deep hover:-translate-y-0.5 hover:shadow-[0_10px_28px_-6px_rgba(123,52,32,0.45)]",
     secondary:
-      "bg-warm-white text-anchor ring-1 ring-forest/20 hover:ring-forest/40 hover:-translate-y-0.5",
+      "bg-warm-white text-anchor ring-1 ring-forest/20 hover:ring-forest/40 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_-12px_rgba(28,56,41,0.25)]",
+    glass:
+      "bg-white/[0.08] text-warm-white/90 ring-1 ring-white/20 backdrop-blur hover:bg-white/[0.15] hover:-translate-y-0.5",
     ghost: "text-anchor hover:text-forest",
   }[variant];
   return (

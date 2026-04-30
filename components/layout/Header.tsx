@@ -28,11 +28,15 @@ export function Header() {
       )}
     >
       <div className="mx-auto flex h-16 max-w-container items-center justify-between px-6">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-navy">
-            <span className="h-3 w-3 rounded-full bg-orange" />
+        <Link href="/" className="flex items-center gap-2.5">
+          <svg width="26" height="26" viewBox="0 0 28 28" fill="none" aria-hidden>
+            <circle cx="14" cy="14" r="13" fill="#1C3829" />
+            <circle cx="14" cy="14" r="5.5" fill="#B0FE76" />
+            <circle cx="14" cy="14" r="2.5" fill="#1C3829" />
+          </svg>
+          <span className="font-display text-[18px] font-semibold tracking-[-0.01em] text-anchor">
+            Ipsa
           </span>
-          <span className="font-display text-xl">Ipsa</span>
         </Link>
 
         <nav
