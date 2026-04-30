@@ -6,6 +6,7 @@ import clsx from "clsx";
 import { mainNav } from "@/content/nav";
 import { MegaMenu } from "./MegaMenu";
 import { Button } from "@/components/ui/Button";
+import { Logo } from "@/components/ui/Logo";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -28,13 +29,15 @@ export function Header() {
       )}
     >
       <div className="mx-auto flex h-16 max-w-container items-center justify-between px-6">
-        <Link href="/" className="flex items-center gap-2.5">
-          <svg width="26" height="26" viewBox="0 0 28 28" fill="none" aria-hidden>
-            <circle cx="14" cy="14" r="13" fill="#1C3829" />
-            <circle cx="14" cy="14" r="5.5" fill="#B0FE76" />
-            <circle cx="14" cy="14" r="2.5" fill="#1C3829" />
-          </svg>
-          <span className="font-display text-[18px] font-semibold tracking-[-0.01em] text-anchor">
+        <Link
+          href="/"
+          className="group flex items-center gap-2.5 transition-transform duration-300 hover:-translate-y-px"
+        >
+          <Logo
+            size={28}
+            className="drop-shadow-[0_2px_6px_rgba(28,56,41,0.18)] transition-transform duration-500 group-hover:rotate-[8deg]"
+          />
+          <span className="font-display text-[19px] font-semibold tracking-[-0.015em] text-anchor">
             Ipsa
           </span>
         </Link>

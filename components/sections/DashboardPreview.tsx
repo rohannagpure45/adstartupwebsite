@@ -1,43 +1,66 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const CHANNEL_NAMES = ["Paid Search", "Meta", "TikTok", "YouTube", "Display"] as const;
 const BAR_COLORS = ["#7B3420", "#A44E2A", "#C97050", "#E49572", "#F2B89A"];
+const BASELINE = [82, 64, 48, 38, 28];
 
 export function DashboardPreview() {
+  // Gentle breathing — slow, subtle motion instead of constant jitter.
+  const startRef = useRef<number | null>(null);
   const [t, setT] = useState(0);
   const [hov, setHov] = useState<number | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const id = setInterval(() => setT((v) => v + 1 / 60), 1000 / 60);
-    return () => clearInterval(id);
+    let raf = 0;
+    const tick = (now: number) => {
+      if (startRef.current === null) startRef.current = now;
+      setT((now - startRef.current) / 1000);
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    const m = setTimeout(() => setMounted(true), 50);
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(m);
+    };
   }, []);
 
-  const roas = (3.2 + Math.sin(t * 0.38) * 0.22).toFixed(2);
-  const realloc = (24.1 + Math.cos(t * 0.28) * 0.45).toFixed(1);
-  const uplift = Math.round(26 + Math.sin(t * 0.32 + 2) * 2.8);
+  // KPIs — slow sin so values feel like steady-state with occasional updates.
+  const roas = (3.2 + Math.sin(t * 0.18) * 0.18).toFixed(2);
+  const realloc = (24.1 + Math.cos(t * 0.14) * 0.4).toFixed(1);
+  const uplift = Math.round(26 + Math.sin(t * 0.16 + 2) * 1.6);
 
-  const channels = CHANNEL_NAMES.map((name, i) => ({
-    name,
-    h: [85, 62, 44, 38, 28][i] + Math.sin(t * (0.4 + i * 0.02) + i) * (4 + i),
-  }));
+  const channels = CHANNEL_NAMES.map((name, i) => {
+    const drift = Math.sin(t * (0.18 + i * 0.02) + i) * (1.5 + i * 0.4);
+    return { name, value: BASELINE[i] + drift };
+  });
 
   return (
     <div
-      className="mx-auto max-w-[640px] overflow-hidden rounded-2xl border border-anchor/15 bg-[#EDE8DF] text-left"
+      className="mx-auto max-w-[640px] overflow-hidden rounded-2xl bg-[#EDE8DF] text-left ring-1 ring-anchor/10"
       style={{
-        boxShadow:
-          "inset 0 3px 14px rgba(0,0,0,0.18), inset 0 1px 4px rgba(0,0,0,0.08), 0 40px 80px -30px rgba(0,0,0,0.35), 0 16px 30px -20px rgba(0,0,0,0.2)",
+        boxShadow: [
+          "inset 0 1px 0 rgba(255,255,255,0.6)",
+          "inset 0 -1px 0 rgba(28,56,41,0.08)",
+          "0 1px 0 rgba(255,255,255,0.4)",
+          "0 30px 60px -28px rgba(28,56,41,0.32)",
+          "0 12px 24px -16px rgba(28,56,41,0.18)",
+        ].join(", "),
       }}
     >
       {/* Window bar */}
-      <div className="flex items-center gap-2 border-b border-anchor/10 bg-[#E0D9CE] px-4 py-3">
+      <div className="flex items-center gap-2 border-b border-anchor/10 bg-[#E0D9CE] px-4 py-2.5">
         <div className="flex gap-1.5">
           {["#FF5F57", "#FEBC2E", "#28C840"].map((c, i) => (
             <span
               key={i}
               className="h-3 w-3 rounded-full"
-              style={{ background: c, boxShadow: "inset 0 1px 2px rgba(0,0,0,0.25)" }}
+              style={{
+                background: c,
+                boxShadow: "inset 0 1px 1px rgba(0,0,0,0.18), 0 1px 0 rgba(255,255,255,0.3)",
+              }}
             />
           ))}
         </div>
@@ -49,7 +72,7 @@ export function DashboardPreview() {
       </div>
 
       {/* Body */}
-      <div className="flex flex-col gap-3.5 p-5">
+      <div className="flex flex-col gap-3 p-5">
         {/* KPI grid */}
         <div className="grid grid-cols-3 gap-2.5">
           {[
@@ -59,16 +82,16 @@ export function DashboardPreview() {
           ].map((k) => (
             <div
               key={k.label}
-              className="rounded-[10px] border border-anchor/12 bg-surface px-3.5 py-3"
+              className="rounded-[10px] bg-surface px-3.5 py-3 ring-1 ring-anchor/8"
               style={{
                 boxShadow:
-                  "inset 0 1px 3px rgba(0,0,0,0.06), inset 0 -1px 0 rgba(255,255,255,0.5)",
+                  "inset 0 1px 2px rgba(255,255,255,0.55), 0 1px 2px rgba(28,56,41,0.04)",
               }}
             >
               <div className="text-[9px] font-medium uppercase tracking-[0.14em] text-[#6B8A7A]">
                 {k.label}
               </div>
-              <div className="mt-1 font-display text-[22px] font-semibold leading-none tracking-[-0.02em] text-anchor">
+              <div className="mt-1 font-display text-[22px] font-semibold leading-none tracking-[-0.02em] text-anchor tabular-nums">
                 {k.val}
               </div>
               <div
@@ -83,66 +106,112 @@ export function DashboardPreview() {
 
         {/* Bar chart */}
         <div
-          className="rounded-[10px] border border-anchor/12 px-4 pb-2.5 pt-3.5"
+          className="rounded-[10px] bg-warm-white/60 px-4 pb-3 pt-3.5 ring-1 ring-anchor/8"
           style={{
-            background: "rgba(28,56,41,0.04)",
-            boxShadow: "inset 0 1px 3px rgba(0,0,0,0.05)",
+            boxShadow:
+              "inset 0 1px 2px rgba(255,255,255,0.6), 0 1px 2px rgba(28,56,41,0.04)",
           }}
         >
-          <div className="mb-3 text-[9.5px] font-medium uppercase tracking-[0.14em] text-[#6B8A7A]">
-            Channel contribution
+          <div className="mb-2 flex items-baseline justify-between">
+            <span className="text-[9.5px] font-medium uppercase tracking-[0.14em] text-[#6B8A7A]">
+              Channel contribution
+            </span>
+            <span className="text-[9.5px] tabular-nums text-[#6B8A7A]">% of incremental</span>
           </div>
-          <div className="flex h-[100px] items-end gap-2">
-            {channels.map((ch, ci) => {
-              const isHov = hov === ci;
-              const color = BAR_COLORS[ci];
-              return (
+
+          {/* Plot area with gridlines */}
+          <div className="relative h-[120px] w-full">
+            {/* Gridlines */}
+            <div className="absolute inset-x-0 top-0 bottom-5 flex flex-col justify-between">
+              {[0, 1, 2, 3].map((i) => (
+                <div
+                  key={i}
+                  className="border-t border-dashed border-anchor/10"
+                  style={{ height: 0 }}
+                />
+              ))}
+            </div>
+            {/* Y axis labels */}
+            <div className="absolute -left-1 top-0 bottom-5 flex flex-col-reverse justify-between text-[8px] tabular-nums text-anchor/35">
+              {[0, 25, 50, 75, 100].map((v) => (
+                <span key={v} className="-translate-y-1/2">{v}</span>
+              ))}
+            </div>
+
+            {/* Bars */}
+            <div className="absolute inset-x-0 bottom-5 top-0 flex items-end gap-2 pl-5">
+              {channels.map((ch, ci) => {
+                const isHov = hov === ci;
+                const color = BAR_COLORS[ci];
+                const targetH = mounted ? ch.value : 0;
+                return (
+                  <div
+                    key={ch.name}
+                    onMouseEnter={() => setHov(ci)}
+                    onMouseLeave={() => setHov(null)}
+                    className="group relative flex h-full flex-1 cursor-pointer flex-col justify-end"
+                  >
+                    {/* Tooltip */}
+                    <div
+                      className="pointer-events-none absolute left-1/2 z-10 -translate-x-1/2 whitespace-nowrap rounded-md bg-anchor px-2 py-1 text-[10px] text-warm-white tabular-nums"
+                      style={{
+                        bottom: "calc(100% + 6px)",
+                        opacity: isHov ? 1 : 0,
+                        transform: isHov
+                          ? "translate(-50%, 0)"
+                          : "translate(-50%, 4px)",
+                        transition: "opacity .15s, transform .15s",
+                        boxShadow: "0 6px 14px rgba(28,56,41,0.25)",
+                      }}
+                    >
+                      {ch.name}: {ch.value.toFixed(0)}%
+                    </div>
+                    {/* Value label above bar */}
+                    <div
+                      className="absolute left-1/2 -translate-x-1/2 text-[9.5px] font-semibold tabular-nums text-anchor"
+                      style={{
+                        bottom: `calc(${targetH}% + 4px)`,
+                        opacity: mounted ? (isHov ? 0 : 0.7) : 0,
+                        transition: "bottom 1.2s cubic-bezier(.22,1,.36,1), opacity .2s",
+                      }}
+                    >
+                      {ch.value.toFixed(0)}
+                    </div>
+                    {/* Bar */}
+                    <div
+                      style={{
+                        width: "100%",
+                        height: `${targetH}%`,
+                        borderRadius: "5px 5px 2px 2px",
+                        background: `linear-gradient(180deg, ${color} 0%, ${color}DD 60%, ${color}AA 100%)`,
+                        boxShadow: isHov
+                          ? `inset 0 1px 0 rgba(255,255,255,0.35), 0 -2px 12px ${color}55`
+                          : "inset 0 1px 0 rgba(255,255,255,0.25)",
+                        filter: isHov ? "brightness(1.08)" : "none",
+                        transition:
+                          "height 1.2s cubic-bezier(.22,1,.36,1), filter .18s ease, box-shadow .18s ease",
+                      }}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* X axis labels */}
+            <div className="absolute inset-x-0 bottom-0 flex gap-2 pl-5">
+              {channels.map((ch, ci) => (
                 <div
                   key={ch.name}
-                  onMouseEnter={() => setHov(ci)}
-                  onMouseLeave={() => setHov(null)}
-                  className="relative flex flex-1 cursor-pointer flex-col items-center gap-1.5"
+                  className="flex-1 text-center text-[9px] leading-tight transition-colors"
+                  style={{
+                    color: hov === ci ? "#1C3829" : "#6B8A7A",
+                    fontWeight: hov === ci ? 600 : 400,
+                  }}
                 >
-                  {/* Tooltip */}
-                  <div
-                    className="pointer-events-none absolute z-10 whitespace-nowrap rounded-md bg-anchor px-2 py-1 text-[10px] text-warm-white"
-                    style={{
-                      bottom: "calc(100% + 4px)",
-                      opacity: isHov ? 1 : 0,
-                      transform: isHov ? "translateY(0)" : "translateY(4px)",
-                      transition: "opacity .15s, transform .15s",
-                      boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
-                    }}
-                  >
-                    {ch.name}: {ch.h.toFixed(0)}%
-                  </div>
-                  {/* Bar */}
-                  <div
-                    style={{
-                      width: "100%",
-                      height: `${ch.h}%`,
-                      borderRadius: "4px 4px 2px 2px",
-                      background: `linear-gradient(180deg, ${color}EE, ${color}88)`,
-                      boxShadow: isHov ? `0 -4px 12px ${color}66` : "none",
-                      filter: isHov ? "brightness(1.1)" : "none",
-                      transform: isHov ? "scaleX(1.06)" : "scaleX(1)",
-                      transformOrigin: "bottom",
-                      transition:
-                        "filter .2s, transform .2s, box-shadow .2s",
-                    }}
-                  />
-                  <div
-                    className="text-[9px] leading-tight text-center transition-colors"
-                    style={{
-                      color: isHov ? "#1C3829" : "#6B8A7A",
-                      fontWeight: isHov ? 600 : 400,
-                    }}
-                  >
-                    {ch.name.split(" ")[0]}
-                  </div>
+                  {ch.name.split(" ")[0]}
                 </div>
-              );
-            })}
+              ))}
+            </div>
           </div>
         </div>
 
