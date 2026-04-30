@@ -259,52 +259,60 @@ function Kpi({
   graph: React.ReactNode;
 }) {
   return (
-    <div className="rounded-2xl border border-forest/15 bg-warm-white p-4 shadow-[0_1px_0_rgba(255,255,255,0.6)_inset,0_8px_18px_-12px_rgba(28,56,41,0.18)]">
-      <div className="flex items-start justify-between gap-2">
+    <div className="overflow-hidden rounded-2xl border border-forest/15 bg-warm-white shadow-[0_1px_0_rgba(255,255,255,0.6)_inset,0_8px_18px_-12px_rgba(28,56,41,0.18)]">
+      <div className="px-4 pt-4">
         <p className="text-[10px] font-medium uppercase tracking-wider text-navy/40">
           {label}
         </p>
-        <div className="h-6 w-12 flex-shrink-0">{graph}</div>
+        <p className="mt-1 font-display text-2xl text-navy">{value}</p>
+        <p className="text-[10px] text-navy/50">{delta}</p>
       </div>
-      <p className="mt-1 font-display text-2xl text-navy">{value}</p>
-      <p className="text-[10px] text-navy/50">{delta}</p>
+      <div className="mt-2 h-9 w-full">{graph}</div>
     </div>
   );
 }
 
 function MiniSparkline({ color, data }: { color: string; data: number[] }) {
-  const W = 48;
-  const H = 24;
+  // SVG fills its container via preserveAspectRatio="none" stretching, so the
+  // line spans full card width without overflowing.
+  const W = 100;
+  const H = 36;
   const min = Math.min(...data);
   const max = Math.max(...data);
   const range = max - min || 1;
   const pts = data.map((v, i) => {
-    const x = 2 + (i / (data.length - 1)) * (W - 4);
-    const y = H - 3 - ((v - min) / range) * (H - 8);
+    const x = (i / (data.length - 1)) * W;
+    const y = H - 4 - ((v - min) / range) * (H - 10);
     return [x, y] as const;
   });
-  const d = pts.map(([x, y], i) => `${i === 0 ? "M" : "L"}${x.toFixed(1)} ${y.toFixed(1)}`).join(" ");
-  const last = pts[pts.length - 1];
+  const d = pts.map(([x, y], i) => `${i === 0 ? "M" : "L"}${x.toFixed(2)} ${y.toFixed(2)}`).join(" ");
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="h-full w-full overflow-visible">
-      <path d={`${d} L${last[0]} ${H - 1} L${pts[0][0]} ${H - 1} Z`} fill={color} fillOpacity="0.14" />
-      <path d={d} fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx={last[0]} cy={last[1]} r="1.8" fill={color} />
+    <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="block h-full w-full">
+      <path d={`${d} L${W} ${H} L0 ${H} Z`} fill={color} fillOpacity="0.16" />
+      <path
+        d={d}
+        fill="none"
+        stroke={color}
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke"
+      />
     </svg>
   );
 }
 
 function MiniSparkbars({ color, data }: { color: string; data: number[] }) {
-  const W = 48;
-  const H = 24;
-  const slot = (W - 4) / data.length;
-  const bw = slot * 0.7;
+  const W = 100;
+  const H = 36;
+  const slot = W / data.length;
+  const bw = slot * 0.62;
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="h-full w-full">
+    <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="block h-full w-full">
       {data.map((v, i) => {
         const h = Math.max(2, v * (H - 4));
-        const x = 2 + slot * i + (slot - bw) / 2;
-        const y = H - 2 - h;
+        const x = slot * i + (slot - bw) / 2;
+        const y = H - h;
         return (
           <rect
             key={i}
@@ -312,7 +320,7 @@ function MiniSparkbars({ color, data }: { color: string; data: number[] }) {
             y={y}
             width={bw}
             height={h}
-            rx="1"
+            rx="1.2"
             fill={color}
             fillOpacity={0.45 + (i / data.length) * 0.5}
           />
@@ -323,12 +331,12 @@ function MiniSparkbars({ color, data }: { color: string; data: number[] }) {
 }
 
 function MiniRing({ color, percent }: { color: string; percent: number }) {
-  const r = 9;
+  const r = 12;
   const c = 2 * Math.PI * r;
   const offset = c * (1 - Math.max(0, Math.min(1, percent / 100)));
   return (
-    <svg viewBox="0 0 48 24" className="h-full w-full">
-      <g transform="translate(24 12)">
+    <svg viewBox="0 0 100 36" className="block h-full w-full">
+      <g transform="translate(82 18)">
         <circle r={r} fill="none" stroke="#2E5E45" strokeOpacity="0.12" strokeWidth="3" />
         <circle
           r={r}
