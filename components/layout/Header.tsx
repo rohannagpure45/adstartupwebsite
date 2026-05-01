@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import clsx from "clsx";
@@ -11,6 +12,8 @@ import { Logo } from "@/components/ui/Logo";
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const pathname = usePathname();
+  const onDark = pathname === "/" && !scrolled;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -28,16 +31,27 @@ export function Header() {
           : "bg-transparent"
       )}
     >
-      <div className="mx-auto flex h-16 max-w-container items-center justify-between px-6">
+      <div className="mx-auto grid h-16 max-w-container grid-cols-[1fr_auto_1fr] items-center px-6">
         <Link
           href="/"
           className="group flex items-center gap-2.5 transition-transform duration-300 hover:-translate-y-px"
         >
           <Logo
             size={28}
-            className="drop-shadow-[0_2px_6px_rgba(28,56,41,0.18)] transition-transform duration-500 group-hover:rotate-[8deg]"
+            tone={onDark ? "light" : "dark"}
+            className={clsx(
+              "transition-transform duration-500 group-hover:rotate-[8deg]",
+              onDark
+                ? "drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]"
+                : "drop-shadow-[0_2px_6px_rgba(28,56,41,0.18)]"
+            )}
           />
-          <span className="font-display text-[19px] font-semibold tracking-[-0.015em] text-anchor">
+          <span
+            className={clsx(
+              "font-display text-[19px] font-semibold tracking-[-0.015em] transition-colors duration-300",
+              onDark ? "text-warm-white" : "text-anchor"
+            )}
+          >
             Ipsa
           </span>
         </Link>
@@ -54,7 +68,12 @@ export function Header() {
             >
               <Link
                 href={item.href}
-                className="inline-flex items-center px-4 py-2 text-sm font-medium text-navy/80 transition hover:text-orange-deep"
+                className={clsx(
+                  "inline-flex items-center px-4 py-2 text-sm font-medium transition",
+                  onDark
+                    ? "text-warm-white/85 hover:text-accent"
+                    : "text-navy/80 hover:text-orange-deep"
+                )}
               >
                 {item.label}
               </Link>
@@ -65,10 +84,15 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center justify-end gap-3">
           <Link
             href="#"
-            className="hidden text-sm font-medium text-navy/70 hover:text-navy md:inline"
+            className={clsx(
+              "hidden text-sm font-medium transition md:inline",
+              onDark
+                ? "text-warm-white/80 hover:text-warm-white"
+                : "text-navy/70 hover:text-navy"
+            )}
           >
             Sign in
           </Link>

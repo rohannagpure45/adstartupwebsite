@@ -1,7 +1,41 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type SVGProps } from "react";
+import {
+  GoogleLogo,
+  MetaLogo,
+  TikTokLogo,
+  YouTubeLogo,
+} from "@/components/ui/BrandLogos";
 
-const CHANNEL_NAMES = ["Paid Search", "Meta", "TikTok", "YouTube", "Display"] as const;
+type IconProps = SVGProps<SVGSVGElement>;
+
+function DisplayIcon(props: IconProps) {
+  // Display isn't a single brand — match the product-page treatment with a
+  // neutral anchor-tone monitor mark.
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#1C3829"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-label="Display"
+      {...props}
+    >
+      <rect x="3" y="5" width="18" height="12" rx="2" />
+      <path d="M3 10h18" />
+    </svg>
+  );
+}
+
+const CHANNELS = [
+  { name: "Paid Search", Icon: GoogleLogo },
+  { name: "Meta", Icon: MetaLogo },
+  { name: "TikTok", Icon: TikTokLogo },
+  { name: "YouTube", Icon: YouTubeLogo },
+  { name: "Display", Icon: DisplayIcon },
+] as const;
 const BAR_COLORS = ["#7B3420", "#A44E2A", "#C97050", "#E49572", "#F2B89A"];
 const BASELINE = [82, 64, 48, 38, 28];
 
@@ -20,10 +54,10 @@ export function DashboardPreview() {
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
-    const m = setTimeout(() => setMounted(true), 50);
+    const m = requestAnimationFrame(() => setMounted(true));
     return () => {
       cancelAnimationFrame(raf);
-      clearTimeout(m);
+      cancelAnimationFrame(m);
     };
   }, []);
 
@@ -32,9 +66,9 @@ export function DashboardPreview() {
   const realloc = (24.1 + Math.cos(t * 0.14) * 0.4).toFixed(1);
   const uplift = Math.round(26 + Math.sin(t * 0.16 + 2) * 1.6);
 
-  const channels = CHANNEL_NAMES.map((name, i) => {
+  const channels = CHANNELS.map(({ name, Icon }, i) => {
     const drift = Math.sin(t * (0.18 + i * 0.02) + i) * (1.5 + i * 0.4);
-    return { name, value: BASELINE[i] + drift };
+    return { name, Icon, value: BASELINE[i] + drift };
   });
 
   return (
@@ -120,9 +154,9 @@ export function DashboardPreview() {
           </div>
 
           {/* Plot area with gridlines */}
-          <div className="relative h-[120px] w-full">
+          <div className="relative h-[124px] w-full">
             {/* Gridlines */}
-            <div className="absolute inset-x-0 top-0 bottom-5 flex flex-col justify-between">
+            <div className="absolute inset-x-0 top-0 bottom-6 flex flex-col justify-between">
               {[0, 1, 2, 3].map((i) => (
                 <div
                   key={i}
@@ -132,14 +166,14 @@ export function DashboardPreview() {
               ))}
             </div>
             {/* Y axis labels */}
-            <div className="absolute -left-1 top-0 bottom-5 flex flex-col-reverse justify-between text-[8px] tabular-nums text-anchor/35">
+            <div className="absolute -left-1 top-0 bottom-6 flex flex-col-reverse justify-between text-[8px] tabular-nums text-anchor/35">
               {[0, 25, 50, 75, 100].map((v) => (
                 <span key={v} className="-translate-y-1/2">{v}</span>
               ))}
             </div>
 
             {/* Bars */}
-            <div className="absolute inset-x-0 bottom-5 top-0 flex items-end gap-2 pl-5">
+            <div className="absolute inset-x-0 bottom-6 top-0 flex items-end gap-2 pl-5">
               {channels.map((ch, ci) => {
                 const isHov = hov === ci;
                 const color = BAR_COLORS[ci];
@@ -172,7 +206,7 @@ export function DashboardPreview() {
                       style={{
                         bottom: `calc(${targetH}% + 4px)`,
                         opacity: mounted ? (isHov ? 0 : 0.7) : 0,
-                        transition: "bottom 1.2s cubic-bezier(.22,1,.36,1), opacity .2s",
+                        transition: "bottom 0.5s cubic-bezier(.22,1,.36,1), opacity .2s",
                       }}
                     >
                       {ch.value.toFixed(0)}
@@ -189,7 +223,7 @@ export function DashboardPreview() {
                           : "inset 0 1px 0 rgba(255,255,255,0.25)",
                         filter: isHov ? "brightness(1.08)" : "none",
                         transition:
-                          "height 1.2s cubic-bezier(.22,1,.36,1), filter .18s ease, box-shadow .18s ease",
+                          "height 0.5s cubic-bezier(.22,1,.36,1), filter .18s ease, box-shadow .18s ease",
                       }}
                     />
                   </div>
@@ -197,20 +231,34 @@ export function DashboardPreview() {
               })}
             </div>
 
-            {/* X axis labels */}
+            {/* X axis labels — brand logo + name (inline) */}
             <div className="absolute inset-x-0 bottom-0 flex gap-2 pl-5">
-              {channels.map((ch, ci) => (
-                <div
-                  key={ch.name}
-                  className="flex-1 text-center text-[9px] leading-tight transition-colors"
-                  style={{
-                    color: hov === ci ? "#1C3829" : "#6B8A7A",
-                    fontWeight: hov === ci ? 600 : 400,
-                  }}
-                >
-                  {ch.name.split(" ")[0]}
-                </div>
-              ))}
+              {channels.map((ch, ci) => {
+                const Icon = ch.Icon;
+                const isHov = hov === ci;
+                return (
+                  <div
+                    key={ch.name}
+                    className="flex flex-1 items-center justify-center gap-1 transition-[opacity,transform] duration-200"
+                    style={{
+                      opacity: isHov ? 1 : 0.85,
+                      transform: isHov ? "scale(1.05)" : "scale(1)",
+                    }}
+                    aria-label={ch.name}
+                  >
+                    <Icon className="h-3 w-3 flex-shrink-0" />
+                    <span
+                      className="whitespace-nowrap text-[8.5px] leading-none transition-colors"
+                      style={{
+                        color: isHov ? "#1C3829" : "#6B8A7A",
+                        fontWeight: isHov ? 600 : 500,
+                      }}
+                    >
+                      {ch.name}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
