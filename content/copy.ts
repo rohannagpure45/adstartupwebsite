@@ -8,8 +8,8 @@ export const hero = {
   eyebrow: "MMM, automated for agencies",
   headline: "The truth behind your ad spend.",
   sub:
-    "Real-time performance intelligence that shows not just what happened, but *why*. Ipsa helps brands measure true incremental impact and optimize budgets with transparent, explainable decisions.",
-  ctaPrimary: { label: "Book a demo", href: "https://getipsa.ai" },
+    "Real-time performance intelligence that shows not just what happened, but *why*. Ipsa helps agencies and brands measure true incremental impact and optimize budgets with transparent, explainable decisions.",
+  ctaPrimary: { label: "Book a demo", href: "#book-demo" },
   ctaSecondary: { label: "See how it works", href: "#how-it-works" },
 };
 

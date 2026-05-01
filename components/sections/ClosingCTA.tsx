@@ -67,8 +67,51 @@ function getEmailDomainError(value: string): string {
   return "";
 }
 
+function SuccessPanel({ onReset }: { onReset: () => void }) {
+  return (
+    <div className="flex flex-col items-center gap-6 py-6">
+      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-accent/20">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <path
+            d="M7 16.5L13 22.5L25 10"
+            stroke="#2E5E45"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </div>
+      <div className="space-y-2 text-center">
+        <h2 className="font-display text-[clamp(26px,3.5vw,44px)] font-semibold leading-[1.1] tracking-[-0.025em] text-anchor">
+          We&rsquo;ll be in touch.
+        </h2>
+        <p className="text-[17px] leading-[1.6] text-forest">
+          Thanks for reaching out &mdash; someone from the Ipsa team will email you
+          within 1&ndash;2 business days.
+        </p>
+      </div>
+      <a
+        href="https://getipsa.ai"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-1.5 rounded-full bg-sienna px-6 py-3 text-sm font-medium text-warm-white shadow-[0_4px_14px_rgba(123,52,32,0.25)] transition-all duration-300 will-change-transform hover:-translate-y-0.5 hover:bg-sienna-deep hover:shadow-[0_10px_28px_-6px_rgba(123,52,32,0.45)]"
+      >
+        Explore getipsa.ai →
+      </a>
+      <button
+        type="button"
+        onClick={onReset}
+        className="text-[13px] text-anchor/45 underline-offset-2 transition hover:text-forest hover:underline"
+      >
+        Submit another request
+      </button>
+    </div>
+  );
+}
+
 export function ClosingCTA() {
   const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [emailError, setEmailError] = useState("");
 
   function handleEmailChange(e: ChangeEvent<HTMLInputElement>) {
@@ -93,11 +136,14 @@ export function ClosingCTA() {
     if (typeof window !== "undefined") {
       window.open(closingCTA.cta.href, "_blank", "noopener,noreferrer");
     }
-    setTimeout(() => setSubmitting(false), 600);
+    setTimeout(() => {
+      setSubmitting(false);
+      setSubmitted(true);
+    }, 600);
   }
 
   return (
-    <section className="bg-surface px-7 py-10 md:py-12">
+    <section id="book-demo" className="bg-surface px-7 py-10 md:py-12">
       <div
         className="mx-auto max-w-[860px] rounded-3xl border border-anchor/12 bg-warm-white px-8 py-16 text-center md:px-12 md:py-[72px]"
         style={{
@@ -105,6 +151,10 @@ export function ClosingCTA() {
             "0 24px 60px -30px rgba(28,56,41,0.18), 0 8px 20px -12px rgba(28,56,41,0.18)",
         }}
       >
+        {submitted ? (
+          <SuccessPanel onReset={() => { setSubmitted(false); setEmailError(""); }} />
+        ) : (
+          <>
         <h2 className="font-display text-[clamp(30px,4vw,54px)] font-semibold leading-[1.1] tracking-[-0.025em] text-anchor">
           {closingCTA.headline}
         </h2>
@@ -186,7 +236,7 @@ export function ClosingCTA() {
           </div>
           <div className="space-y-1.5 md:col-span-2">
             <label htmlFor="cta-spend" className={labelBase}>
-              Monthly ad spend you manage
+              Yearly ad spend you manage
             </label>
             <select id="cta-spend" name="spend" required defaultValue="" className={inputBase}>
               <option value="" disabled>
@@ -199,14 +249,43 @@ export function ClosingCTA() {
             </select>
           </div>
           <div className="space-y-1.5 md:col-span-2">
+            <label htmlFor="cta-measurement" className={labelBase}>
+              How are you currently measuring marketing effectiveness?
+            </label>
+            <select id="cta-measurement" name="measurement" required defaultValue="" className={inputBase}>
+              <option value="" disabled>
+                Select an option
+              </option>
+              <option value="mmm">We use MMM</option>
+              <option value="attribution">Attribution / last-touch only</option>
+              <option value="spreadsheet">Spreadsheets / manual</option>
+              <option value="nothing">Nothing formal yet</option>
+            </select>
+          </div>
+          <div className="space-y-1.5 md:col-span-2">
+            <label htmlFor="cta-challenge" className={labelBase}>
+              What&rsquo;s your biggest challenge with marketing spend decisions?
+            </label>
+            <select id="cta-challenge" name="challenge" required defaultValue="" className={inputBase}>
+              <option value="" disabled>
+                Select an option
+              </option>
+              <option value="roi">Proving ROI to clients / stakeholders</option>
+              <option value="pipeline">Data pipeline &amp; reporting time</option>
+              <option value="allocation">Budget allocation across channels</option>
+              <option value="no-process">We don&rsquo;t have a measurement process yet</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div className="space-y-1.5 md:col-span-2">
             <label htmlFor="cta-pain" className={labelBase}>
-              Biggest MMM pain right now <span className="text-anchor/40">(optional)</span>
+              Add any additional information <span className="text-anchor/40">(optional)</span>
             </label>
             <textarea
               id="cta-pain"
               name="pain"
               rows={3}
-              placeholder="Pipelines, explainability, turnaround time…"
+              placeholder="Anything else you'd like us to know…"
               className={`${inputBase} resize-none`}
             />
           </div>
@@ -229,6 +308,8 @@ export function ClosingCTA() {
             </p>
           </div>
         </form>
+          </>
+        )}
       </div>
     </section>
   );

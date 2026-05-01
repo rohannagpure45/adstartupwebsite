@@ -21,8 +21,16 @@ export function Button({ href, children, variant = "primary", className }: Props
       "bg-white/[0.08] text-warm-white/90 ring-1 ring-white/20 backdrop-blur hover:bg-white/[0.15] hover:-translate-y-0.5",
     ghost: "text-anchor hover:text-forest",
   }[variant];
+  const classes = clsx(base, styles, className);
+  if (href.startsWith("#")) {
+    return (
+      <a href={href} className={classes}>
+        {children}
+      </a>
+    );
+  }
   return (
-    <Link href={href} className={clsx(base, styles, className)}>
+    <Link href={href} className={classes}>
       {children}
     </Link>
   );

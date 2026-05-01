@@ -43,12 +43,12 @@ export function MegaMenu() {
           <p className="text-sm text-navy/70">
             Built for agencies. Designed for analysts.
           </p>
-          <Link
-            href="https://getipsa.ai"
+          <a
+            href="#book-demo"
             className="text-sm font-medium text-orange-deep hover:text-orange"
           >
             Book a demo →
-          </Link>
+          </a>
         </div>
       </div>
     </motion.div>
