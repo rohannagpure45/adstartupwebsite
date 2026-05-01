@@ -201,7 +201,7 @@ function BarColumn({
         {value}%
       </motion.span>
       <motion.div
-        className="relative w-full max-w-[44px] overflow-hidden rounded-t-md shadow-[0_4px_8px_-2px_rgba(28,56,41,0.22)]"
+        className="relative w-full max-w-[44px] rounded-t-md shadow-[0_4px_8px_-2px_rgba(28,56,41,0.22)]"
         style={{
           background: `linear-gradient(180deg, ${color} 0%, ${withAlpha(color, 0.78)} 100%)`,
         }}
@@ -210,13 +210,7 @@ function BarColumn({
         viewport={{ once: true, amount: 0.5 }}
         transition={{ delay: 0.15 + index * 0.07, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         aria-label={`${name} ${value} percent`}
-      >
-        {/* inner highlight */}
-        <span
-          className="absolute inset-x-1 top-1 block h-1/3 rounded-t-md"
-          style={{ background: "rgba(255,255,255,0.18)" }}
-        />
-      </motion.div>
+      />
     </div>
   );
 }
