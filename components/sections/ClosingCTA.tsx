@@ -47,13 +47,21 @@ const FREE_EMAIL_DOMAINS = new Set([
   "126.com",
 ]);
 
+function isFreeEmailDomain(domain: string): boolean {
+  if (FREE_EMAIL_DOMAINS.has(domain)) return true;
+  for (const blocked of FREE_EMAIL_DOMAINS) {
+    if (domain.endsWith(`.${blocked}`)) return true;
+  }
+  return false;
+}
+
 function getEmailDomainError(value: string): string {
   const trimmed = value.trim().toLowerCase();
   if (!trimmed) return "";
   const at = trimmed.lastIndexOf("@");
   if (at === -1 || at === trimmed.length - 1) return "";
   const domain = trimmed.slice(at + 1);
-  if (FREE_EMAIL_DOMAINS.has(domain)) {
+  if (isFreeEmailDomain(domain)) {
     return "Please use your work email — personal email providers aren't accepted.";
   }
   return "";
@@ -203,7 +211,7 @@ export function ClosingCTA() {
             />
           </div>
 
-          <div className="md:col-span-2 mt-2 flex justify-center">
+          <div className="md:col-span-2 mt-2 flex flex-col items-center gap-3">
             <button
               type="submit"
               disabled={submitting}
@@ -211,6 +219,14 @@ export function ClosingCTA() {
             >
               {submitting ? "Sending…" : closingCTA.cta.label}
             </button>
+            <p className="max-w-md text-center text-[12px] leading-snug text-anchor/55">
+              By submitting, you agree to be contacted about Ipsa. We&rsquo;ll
+              never share your details. See our{" "}
+              <a className="underline transition hover:text-forest" href="/privacy">
+                Privacy Policy
+              </a>
+              .
+            </p>
           </div>
         </form>
       </div>
