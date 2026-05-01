@@ -1,13 +1,26 @@
 type Props = {
   size?: number;
   className?: string;
+  tone?: "dark" | "light";
 };
 
 /* Refined Ipsa mark: an aperture/lens-style symbol that doubles as the
    "i" of Ipsa. Concentric rings with a soft inner glow and a subtle inset
    highlight to give the disc dimension instead of looking like a flat decal. */
-export function Logo({ size = 28, className }: Props) {
-  const id = `ipsa-${size}`;
+export function Logo({ size = 28, className, tone = "dark" }: Props) {
+  const id = `ipsa-${size}-${tone}`;
+  const discStops =
+    tone === "light"
+      ? [
+          { offset: "0%", color: "#FFFFFF" },
+          { offset: "55%", color: "#F4F1EA" },
+          { offset: "100%", color: "#D9D3C5" },
+        ]
+      : [
+          { offset: "0%", color: "#2E5E45" },
+          { offset: "55%", color: "#1C3829" },
+          { offset: "100%", color: "#0F1F17" },
+        ];
   return (
     <svg
       width={size}
@@ -19,9 +32,9 @@ export function Logo({ size = 28, className }: Props) {
     >
       <defs>
         <radialGradient id={`${id}-disc`} cx="35%" cy="30%" r="80%">
-          <stop offset="0%" stopColor="#2E5E45" />
-          <stop offset="55%" stopColor="#1C3829" />
-          <stop offset="100%" stopColor="#0F1F17" />
+          {discStops.map((s) => (
+            <stop key={s.offset} offset={s.offset} stopColor={s.color} />
+          ))}
         </radialGradient>
         <radialGradient id={`${id}-iris`} cx="40%" cy="35%" r="65%">
           <stop offset="0%" stopColor="#D7FFA9" />
@@ -40,7 +53,7 @@ export function Logo({ size = 28, className }: Props) {
         cy="16"
         r="15"
         fill="none"
-        stroke="rgba(255,255,255,0.18)"
+        stroke={tone === "light" ? "rgba(28,56,41,0.18)" : "rgba(255,255,255,0.18)"}
         strokeWidth="0.6"
       />
       {/* Top-left specular highlight */}
@@ -49,7 +62,7 @@ export function Logo({ size = 28, className }: Props) {
         cy="9"
         rx="6.5"
         ry="3"
-        fill="rgba(255,255,255,0.16)"
+        fill={tone === "light" ? "rgba(255,255,255,0.55)" : "rgba(255,255,255,0.16)"}
         filter={`url(#${id}-shadow)`}
       />
 
