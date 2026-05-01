@@ -1,30 +1,29 @@
 "use client";
 import { motion } from "framer-motion";
 import { type SVGProps } from "react";
-import { MetaLogo, TikTokLogo } from "@/components/ui/BrandLogos";
+import {
+  GoogleLogo,
+  MetaLogo,
+  TikTokLogo,
+  YouTubeLogo,
+} from "@/components/ui/BrandLogos";
 
 type IconProps = SVGProps<SVGSVGElement>;
 
-function PaidSearchIcon(props: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-label="Paid Search" {...props}>
-      <circle cx="11" cy="11" r="7" />
-      <path d="m21 21-4.3-4.3" />
-    </svg>
-  );
-}
-
-function YouTubeIcon(props: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-label="YouTube" {...props}>
-      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-    </svg>
-  );
-}
-
 function DisplayIcon(props: IconProps) {
+  // Generic monitor — Display isn't a single brand, so use a neutral
+  // anchor-tone outline mark.
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-label="Display" {...props}>
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#1C3829"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-label="Display"
+      {...props}
+    >
       <rect x="3" y="5" width="18" height="12" rx="2" />
       <path d="M3 10h18" />
     </svg>
@@ -32,10 +31,10 @@ function DisplayIcon(props: IconProps) {
 }
 
 const channels = [
-  { name: "Paid Search", value: 78, color: "#B0FE76", Icon: PaidSearchIcon },
+  { name: "Paid Search", value: 78, color: "#B0FE76", Icon: GoogleLogo },
   { name: "Meta", value: 64, color: "#F38668", Icon: MetaLogo },
   { name: "TikTok", value: 52, color: "#2E5E45", Icon: TikTokLogo },
-  { name: "YouTube", value: 46, color: "#DE6854", Icon: YouTubeIcon },
+  { name: "YouTube", value: 46, color: "#DE6854", Icon: YouTubeLogo },
   { name: "Display", value: 28, color: "#1C3829", Icon: DisplayIcon },
 ];
 
@@ -168,7 +167,7 @@ function BarChart() {
                   className="h-2 w-2 flex-shrink-0 rounded-full sm:h-2.5 sm:w-2.5"
                   style={{ background: c.color }}
                 />
-                <c.Icon className="h-3 w-3 text-navy/55 sm:h-3.5 sm:w-3.5" />
+                <c.Icon className="h-3.5 w-3.5 text-navy/65 sm:h-4 sm:w-4" />
               </div>
               <span className="truncate text-[10px] font-medium text-navy/70 sm:text-[11px]">
                 {c.name}

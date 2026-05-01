@@ -10,10 +10,7 @@ export function LogoMarquee({ logos }: { logos: string[] }) {
           const entry = BRAND_LOGOS[logo];
           if (!entry) {
             return (
-              <span
-                key={i}
-                className="font-display text-2xl text-anchor/40 transition hover:text-anchor"
-              >
+              <span key={i} className="font-display text-2xl text-anchor/70">
                 {logo}
               </span>
             );
@@ -23,7 +20,7 @@ export function LogoMarquee({ logos }: { logos: string[] }) {
             <Component
               key={i}
               style={{ height, width: "auto" }}
-              className="text-anchor/45 transition-colors duration-200 hover:text-anchor"
+              className="opacity-90 transition-opacity duration-200 hover:opacity-100"
             />
           );
         })}
