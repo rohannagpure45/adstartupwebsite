@@ -125,7 +125,7 @@ export function Comparison() {
   const [activeCompetitor, setActiveCompetitor] = useState<ColKey>(competitors[0].key);
 
   return (
-    <section className="relative bg-warm-white py-20 md:py-28">
+    <section className="relative bg-warm-white py-9 md:py-12">
       <div className="mx-auto max-w-container px-6">
         <div className="grid gap-10 lg:grid-cols-[1.55fr_1fr] lg:items-center lg:gap-14">
           {/* LEFT — Comparison table */}

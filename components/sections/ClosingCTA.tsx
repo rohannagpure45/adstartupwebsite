@@ -97,7 +97,7 @@ export function ClosingCTA() {
   }
 
   return (
-    <section className="bg-surface px-7 py-24 md:py-28">
+    <section className="bg-surface px-7 py-10 md:py-12">
       <div
         className="mx-auto max-w-[860px] rounded-3xl border border-anchor/12 bg-warm-white px-8 py-16 text-center md:px-12 md:py-[72px]"
         style={{

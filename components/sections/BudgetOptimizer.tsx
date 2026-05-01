@@ -66,7 +66,7 @@ const REC_Y = sy(REC_REV);
 
 export function BudgetOptimizer() {
   return (
-    <section className="relative py-28 md:py-36">
+    <section className="relative py-12 md:py-16">
       <div className="mx-auto grid max-w-container items-center gap-16 px-6 lg:grid-cols-2">
         <Reveal>
           <RevealItem>
@@ -265,16 +265,28 @@ export function BudgetOptimizer() {
                 strokeDasharray="2 3"
               />
               <circle cx={CUR_X} cy={CUR_Y} r="4" fill="#FFFBF5" stroke="#2E5E45" strokeWidth="2" />
-              <text
-                x={CUR_X + 8}
-                y={CUR_Y - 8}
-                fontSize="9"
-                fontWeight="600"
-                fill="#2E5E45"
-                fontFamily="var(--font-dm-sans), system-ui, sans-serif"
-              >
-                Current · ${CURRENT_SPEND}k
-              </text>
+              <g transform={`translate(${CUR_X + 8}, ${CUR_Y - 18})`}>
+                <rect
+                  x="0"
+                  y="0"
+                  width="74"
+                  height="14"
+                  rx="4"
+                  fill="#FFFBF5"
+                  stroke="rgba(28,56,41,0.12)"
+                  strokeWidth="1"
+                />
+                <text
+                  x="6"
+                  y="10"
+                  fontSize="9"
+                  fontWeight="600"
+                  fill="#2E5E45"
+                  fontFamily="var(--font-dm-sans), system-ui, sans-serif"
+                >
+                  Current · ${CURRENT_SPEND}k
+                </text>
+              </g>
             </motion.g>
 
             {/* Reallocation arrow: current → recommended */}
@@ -337,7 +349,7 @@ export function BudgetOptimizer() {
                   fontFamily="var(--font-dm-sans), system-ui, sans-serif"
                   letterSpacing="0.12em"
                 >
-                  RECOMMENDED · KNEE
+                  RECOMMENDED
                 </text>
                 <text
                   x="10"

@@ -59,7 +59,7 @@ export function Hero() {
         style={{ background: RADIAL_GLOWS }}
       />
 
-      <div className="relative mx-auto max-w-container px-6 pb-20 pt-[148px] text-center md:pb-24">
+      <div className="relative mx-auto max-w-container px-6 pb-10 pt-[148px] text-center md:pb-14">
         {/* Eyebrow */}
         <span
           className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.08] px-4 py-1.5 backdrop-blur"

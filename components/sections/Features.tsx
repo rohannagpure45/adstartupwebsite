@@ -23,7 +23,7 @@ const icons = [
 
 export function Features() {
   return (
-    <section className="relative py-28 md:py-36">
+    <section className="relative py-12 md:py-16">
       <div className="mx-auto max-w-container px-6">
         <Reveal className="max-w-2xl">
           <RevealItem>

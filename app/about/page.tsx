@@ -7,7 +7,7 @@ import { sampleCopy } from "@/content/copy";
 export default function AboutPage() {
   return (
     <>
-      <section className="relative overflow-hidden pt-36 pb-24 md:pt-44 md:pb-32">
+      <section className="relative overflow-hidden pt-32 pb-10 md:pt-40 md:pb-14">
         <GradientBlob variant={2} className="-top-40 -left-40 h-[600px] w-[600px]" />
         <div className="relative mx-auto max-w-container px-6">
           <Reveal className="max-w-3xl">
@@ -34,7 +34,7 @@ export default function AboutPage() {
 
       <VisionMissionPromise />
 
-      <section className="bg-off-blue/40 py-24 md:py-32">
+      <section className="bg-off-blue/40 py-10 md:py-14">
         <div className="mx-auto max-w-container px-6">
           <Reveal>
             <RevealItem>

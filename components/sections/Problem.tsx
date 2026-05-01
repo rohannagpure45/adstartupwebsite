@@ -3,27 +3,17 @@ import { Reveal, RevealItem } from "@/components/ui/SectionReveal";
 
 export function Problem() {
   return (
-    <section className="relative overflow-hidden bg-warm-white py-28 md:py-44">
-      {/* Editorial cream surface with a soft off-axis ambient accent.
-         The ambient glow sits in the upper-right so it never crosses the
-         body text, keeping foreground copy fully legible against a light
-         background. A faint top/bottom feather blends with neighboring
-         sections without forcing a hard tonal shift. */}
+    <section className="relative overflow-hidden bg-warm-white py-12 md:py-20">
+      {/* Editorial cream surface with soft off-axis ambient accents only.
+         No vertical band — the section reads as a single warm-white field
+         so it blends into Hero's bottom (also warm-white) without a seam. */}
       <div
         aria-hidden
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(180deg, #FFFBF5 0%, #FBF6EA 18%, #F6F0E0 50%, #FBF6EA 82%, #FFFBF5 100%)",
-        }}
+        className="absolute inset-0 bg-[radial-gradient(ellipse_60%_45%_at_85%_18%,rgba(46,94,69,0.08),transparent_70%)]"
       />
       <div
         aria-hidden
-        className="absolute inset-0 bg-[radial-gradient(ellipse_60%_45%_at_85%_18%,rgba(46,94,69,0.10),transparent_70%)]"
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-[radial-gradient(ellipse_45%_35%_at_15%_85%,rgba(176,254,118,0.08),transparent_70%)]"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_45%_35%_at_15%_85%,rgba(176,254,118,0.06),transparent_70%)]"
       />
       <div className="relative mx-auto max-w-container px-6">
         <Reveal>

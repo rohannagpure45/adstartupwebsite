@@ -3,7 +3,7 @@ import { Reveal, RevealItem } from "@/components/ui/SectionReveal";
 
 export function VisionMissionPromise() {
   return (
-    <section id="vision" className="py-24 md:py-32">
+    <section id="vision" className="py-10 md:py-14">
       <div className="mx-auto max-w-container px-6">
         <Reveal className="grid gap-16 md:grid-cols-[1fr_2fr]">
           <RevealItem>
