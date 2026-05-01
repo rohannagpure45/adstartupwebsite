@@ -16,7 +16,7 @@ function renderBody(body: string) {
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="relative bg-warm-white py-24 md:py-32">
+    <section id="how-it-works" className="relative bg-warm-white py-10 md:py-14">
       <div className="mx-auto max-w-container px-6">
         <div className="mx-auto mb-16 max-w-[700px] text-center">
           <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-forest">

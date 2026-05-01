@@ -16,7 +16,7 @@ function renderHeadlineWithEm(text: string) {
 
 export function Mission() {
   return (
-    <section className="relative overflow-hidden bg-anchor py-28 md:py-36">
+    <section className="relative overflow-hidden bg-anchor py-12 md:py-16">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"

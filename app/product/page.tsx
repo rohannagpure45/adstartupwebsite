@@ -36,7 +36,7 @@ const tabs = [
 export default function ProductPage() {
   return (
     <>
-      <section className="relative overflow-hidden pt-36 pb-20 md:pt-44">
+      <section className="relative overflow-hidden pt-32 pb-9 md:pt-40">
         <GradientBlob variant={1} className="-top-40 right-0 h-[500px] w-[500px]" />
         <div className="relative mx-auto grid max-w-container items-center gap-16 px-6 lg:grid-cols-[1fr_1fr]">
           <Reveal>
@@ -61,7 +61,7 @@ export default function ProductPage() {
         </div>
       </section>
 
-      <section className="py-24 md:py-32">
+      <section className="py-10 md:py-14">
         <div className="mx-auto max-w-container px-6">
           <Tabs tabs={tabs} />
         </div>
