@@ -85,20 +85,25 @@ export const closingCTA = {
   cta: { label: "Book a demo →", href: "https://getipsa.ai" },
 };
 
+export const mission = {
+  eyebrow: "Our mission",
+  headline: "Turn MMM from a luxury into *the industry standard*.",
+  sub:
+    "Every marketing dollar deserves a clear answer for what it did. We're building the platform that delivers it — automated, repeatable, and explainable to every client.",
+};
+
 export const visionMissionPromise = {
+  sectionLabel: "What drives us",
+  sectionSub:
+    "The principles that shape how we build Ipsa and how we work with the analysts who use it.",
   items: [
     {
-      label: "Our Vision: why we exist",
+      label: "Our Mission",
       body:
         "To give every marketing dollar a clear answer for what it did. To turn MMM from a luxury into an industry standard.",
     },
     {
-      label: "Our Mission: what we do",
-      body:
-        "Replace bespoke MMM builds with a repeatable, automated platform built for agencies.",
-    },
-    {
-      label: "Our Promise: how we help",
+      label: "Our Promise",
       body:
         "Every budget decision comes with a clear reason, so analysts can move faster and clients can trust the recommendation.",
     },

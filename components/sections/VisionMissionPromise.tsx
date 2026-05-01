@@ -7,10 +7,11 @@ export function VisionMissionPromise() {
       <div className="mx-auto max-w-container px-6">
         <Reveal className="grid gap-16 md:grid-cols-[1fr_2fr]">
           <RevealItem>
-            <h2 className="font-display text-4xl text-navy md:text-5xl">Tone &amp; Voice</h2>
+            <h2 className="font-display text-4xl text-navy md:text-5xl">
+              {visionMissionPromise.sectionLabel}
+            </h2>
             <p className="mt-4 max-w-sm text-base text-navy/60">
-              Our principles for how we talk about MMM, models, and the work that gets agencies
-              to confident decisions.
+              {visionMissionPromise.sectionSub}
             </p>
           </RevealItem>
           <div className="space-y-12">
