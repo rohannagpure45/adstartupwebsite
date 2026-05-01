@@ -34,11 +34,16 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
       if (!a) return;
       const href = a.getAttribute("href");
       if (!href || !href.startsWith("#") || href === "#") return;
-      const el = document.querySelector(href);
+      let el: Element | null = null;
+      try {
+        el = document.querySelector(href);
+      } catch {
+        return;
+      }
       if (!el) return;
       e.preventDefault();
       lenis.scrollTo(el as HTMLElement, { offset: -80, duration: 1.0 });
-      history.pushState(null, "", href);
+      if (window.location.hash !== href) history.pushState(null, "", href);
     };
     document.addEventListener("click", onAnchorClick);
 

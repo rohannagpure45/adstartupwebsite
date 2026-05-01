@@ -5,13 +5,14 @@ Tracking work that's intentionally deferred. Pick from here when ready.
 ## Lead capture / forms
 
 - **Wire the closing CTA intake form to a real backend.**
-  Today (`components/sections/ClosingCTA.tsx`) the form collects 6 fields
-  (name, work email, agency, role, monthly ad spend, optional pain) and on
-  submit just opens `https://getipsa.ai` in a new tab — the field values
-  are dropped on the floor. Decide on a backend (Resend, Loops, HubSpot,
-  Pipedrive, custom Next.js route handler) and `POST` the FormData to it
-  before the redirect. Also wire a server-side email-domain check (the
-  client-side denylist in `FREE_EMAIL_DOMAINS` is bypassable via curl).
+  Today (`components/sections/ClosingCTA.tsx`) the form collects 8 fields
+  (name, work email, agency, role, yearly ad spend, measurement method,
+  biggest challenge, optional notes) and on submit just opens
+  `https://getipsa.ai` in a new tab — the field values are dropped on the
+  floor. Decide on a backend (Resend, Loops, HubSpot, Pipedrive, custom
+  Next.js route handler) and `POST` the FormData to it before the redirect.
+  Also wire a server-side email-domain check (the client-side denylist in
+  `FREE_EMAIL_DOMAINS` is bypassable via curl).
 
 ## Legal
 
