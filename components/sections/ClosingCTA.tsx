@@ -97,7 +97,7 @@ export function ClosingCTA() {
   }
 
   return (
-    <section className="bg-surface px-7 py-10 md:py-12">
+    <section id="book-demo" className="bg-surface px-7 py-10 md:py-12">
       <div
         className="mx-auto max-w-[860px] rounded-3xl border border-anchor/12 bg-warm-white px-8 py-16 text-center md:px-12 md:py-[72px]"
         style={{
@@ -186,7 +186,7 @@ export function ClosingCTA() {
           </div>
           <div className="space-y-1.5 md:col-span-2">
             <label htmlFor="cta-spend" className={labelBase}>
-              Monthly ad spend you manage
+              Yearly ad spend you manage
             </label>
             <select id="cta-spend" name="spend" required defaultValue="" className={inputBase}>
               <option value="" disabled>
@@ -199,14 +199,43 @@ export function ClosingCTA() {
             </select>
           </div>
           <div className="space-y-1.5 md:col-span-2">
+            <label htmlFor="cta-measurement" className={labelBase}>
+              How are you currently measuring marketing effectiveness?
+            </label>
+            <select id="cta-measurement" name="measurement" required defaultValue="" className={inputBase}>
+              <option value="" disabled>
+                Select an option
+              </option>
+              <option value="mmm">We use MMM</option>
+              <option value="attribution">Attribution / last-touch only</option>
+              <option value="spreadsheet">Spreadsheets / manual</option>
+              <option value="nothing">Nothing formal yet</option>
+            </select>
+          </div>
+          <div className="space-y-1.5 md:col-span-2">
+            <label htmlFor="cta-challenge" className={labelBase}>
+              What&rsquo;s your biggest challenge with marketing spend decisions?
+            </label>
+            <select id="cta-challenge" name="challenge" required defaultValue="" className={inputBase}>
+              <option value="" disabled>
+                Select an option
+              </option>
+              <option value="roi">Proving ROI to clients / stakeholders</option>
+              <option value="pipeline">Data pipeline &amp; reporting time</option>
+              <option value="allocation">Budget allocation across channels</option>
+              <option value="no-process">We don&rsquo;t have a measurement process yet</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div className="space-y-1.5 md:col-span-2">
             <label htmlFor="cta-pain" className={labelBase}>
-              Biggest MMM pain right now <span className="text-anchor/40">(optional)</span>
+              Add any additional information <span className="text-anchor/40">(optional)</span>
             </label>
             <textarea
               id="cta-pain"
               name="pain"
               rows={3}
-              placeholder="Pipelines, explainability, turnaround time…"
+              placeholder="Anything else you'd like us to know…"
               className={`${inputBase} resize-none`}
             />
           </div>

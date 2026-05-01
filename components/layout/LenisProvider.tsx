@@ -19,7 +19,31 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
+
+    const onAnchorClick = (e: MouseEvent) => {
+      if (
+        e.defaultPrevented ||
+        e.metaKey ||
+        e.ctrlKey ||
+        e.shiftKey ||
+        e.altKey ||
+        e.button !== 0
+      )
+        return;
+      const a = (e.target as HTMLElement | null)?.closest("a");
+      if (!a) return;
+      const href = a.getAttribute("href");
+      if (!href || !href.startsWith("#") || href === "#") return;
+      const el = document.querySelector(href);
+      if (!el) return;
+      e.preventDefault();
+      lenis.scrollTo(el as HTMLElement, { offset: -80, duration: 1.0 });
+      history.pushState(null, "", href);
+    };
+    document.addEventListener("click", onAnchorClick);
+
     return () => {
+      document.removeEventListener("click", onAnchorClick);
       cancelAnimationFrame(raf);
       lenis.destroy();
     };

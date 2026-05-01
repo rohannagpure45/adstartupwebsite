@@ -96,7 +96,7 @@ export function Header() {
           >
             Sign in
           </Link>
-          <Button href="https://getipsa.ai" variant="primary">
+          <Button href="#book-demo" variant="primary">
             Book a demo
           </Button>
         </div>
